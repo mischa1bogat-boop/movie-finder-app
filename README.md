@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Movie Finder 🎬
 
 A full-stack web application for searching and exploring movies. Built as a portfolio project to demonstrate professional development skills.
@@ -17,3 +18,7 @@ A full-stack web application for searching and exploring movies. Built as a port
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/mischa1bogat-boop/movie-finder-app.git
+=======
+# movie-finder-app
+Full-stack web application for searching and exploring movies. Built with React.js (Next.js) and Node.js. Features include real-time search and dynamic movie listings.
+>>>>>>> 8aaa6a5c919b5ada87a01c9defe0d3fb60bb0dfb
