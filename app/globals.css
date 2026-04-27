@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-card {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.animate-hero {
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.animate-hero-delay {
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.bg-dots-dark {
+  background-image:
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 35px,
+      rgba(147, 51, 234, 0.25) 35px,
+      rgba(147, 51, 234, 0.25) 36px);
+}
+
+.bg-dots-light {
+  background-image:
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 35px,
+      rgba(147, 51, 234, 0.1) 35px,
+      rgba(147, 51, 234, 0.1) 36px);
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  25% {
+    transform: translateY(-30px) translateX(15px);
+  }
+
+  50% {
+    transform: translateY(-10px) translateX(-10px);
+  }
+
+  75% {
+    transform: translateY(-40px) translateX(5px);
+  }
+}
+
+@keyframes float2 {
+
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  25% {
+    transform: translateY(20px) translateX(-20px);
+  }
+
+  50% {
+    transform: translateY(-15px) translateX(25px);
+  }
+
+  75% {
+    transform: translateY(10px) translateX(-15px);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.glow-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.glow-float-delay {
+  animation: float2 10s ease-in-out infinite;
+}
+
+.glow-pulse {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
