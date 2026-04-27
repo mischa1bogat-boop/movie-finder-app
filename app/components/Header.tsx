@@ -48,7 +48,7 @@ export default function Header(props: HeaderProps) {
         <header className={`
             fixed top-0 left-0 right-0 z-50 transition-transform duration-300
             ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-            w-[100%] h-10 px-40 py-7 flex items-center justify-between
+            w-[100%] h-10 px-6 md:px-40 py-7 flex items-center justify-between
             ${isDark ? 'from-indigo-800/90 to-indigo-900/90 bg-gradient-to-r backdrop-blur-md' : 'from-indigo-200/90 to-indigo-400/90 bg-gradient-to-r backdrop-blur-md'}
         `}>
             <button className={`cursor-pointer bg-clip-text text-transparent text-2xl font-bold ${isDark ? 'from-pink-600 to-amber-700' : 'from-pink-400 to-purple-400'} bg-gradient-to-r`}
