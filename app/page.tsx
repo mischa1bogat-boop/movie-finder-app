@@ -245,6 +245,7 @@ export default function Home() {
                 password={password}
                 setPassword={setPassword}
                 errorMsg={errorMsg}
+                setErrorMsg={setErrorMsg}
                 remember={remember}
                 setRemember={setRemember}
                 handleLogin={handleLogin}
@@ -276,6 +277,7 @@ export default function Home() {
                 password={password}
                 setPassword={setPassword}
                 errorMsg={errorMsg}
+                setErrorMsg={setErrorMsg}
                 remember={remember}
                 setRemember={setRemember}
                 handleRegister={handleRegister}
