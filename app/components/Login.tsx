@@ -14,6 +14,7 @@ interface LoginFormProps {
     handleLogin: () => void;
     navigateTo: (page: string) => void;
     handleGoogleLogin: () => void;
+    setErrorMsg: (msg: string) => void;
 }
 
 export default function LoginForm(props: LoginFormProps) {
