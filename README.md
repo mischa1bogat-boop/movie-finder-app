@@ -37,4 +37,4 @@ Full-stack web application for searching and exploring movies. Built with React.
 [Movie details]<img width="2540" height="1235" alt="image" src="https://github.com/user-attachments/assets/d4b4a606-9e5d-4a80-9c9c-76c6eeb9ac68" />
 
 
-[Live Demo]([movie-finder-app-n6kq.vercel.app](https://movie-finder-app-n6kq.vercel.app/))
+![Live Demo]([movie-finder-app-n6kq.vercel.app](https://movie-finder-app-n6kq.vercel.app/))
