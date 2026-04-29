@@ -35,6 +35,8 @@ export default function Home() {
   const [categoryTitle, setCategoryTitle] = useState('Trending Movies');
   const [watchlist, setWatchList] = useState<any[]>([]);
   const [movieGenres, setMovieGenres] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+
   const navigateTo = (page: string) => {
     setCurrentPage(page);
     window.history.pushState({ page }, '');
@@ -110,35 +112,57 @@ export default function Home() {
     return () => window.removeEventListener('popstate', handleBack);
   }, []);
 
-  const searchMovies = async () => {
+  const searchMovies = async (pageNum = 1) => {
     if (!isLogin) {
       navigateTo('register');
       return;
     }
     if (!searchQuery) return;
     setIsSearching(true);
-    const response = await fetch(`/api/movies?type=${searchType}&query=${searchQuery}`);
+    const response = await fetch(`/api/movies?type=${searchType}&query=${searchQuery}&page=${pageNum}`);
     const data = await response.json();
-    setMovies(data.results || []);
+    if (pageNum === 1) {
+      setMovies(data.results || []);
+    } else {
+      setMovies(prev => [...prev, ...(data.results || [])]);
+    }
+    setPage(pageNum);
     setIsSearching(false);
   };
 
-  const fetchTrending = async () => {
-    const response = await fetch(`/api/movies?type=trending&endpoint=movie/day`);
+
+  const fetchTrending = async (pageNum = 1) => {
+    const response = await fetch(`/api/movies?type=trending&endpoint=movie/day&page=${pageNum}`);
     const data = await response.json();
-    setMovies(data.results || []);
+
+    if (pageNum === 1) {
+      setMovies(data.results || []);
+    } else {
+      setMovies(prev => [...prev, ...(data.results || [])]);
+    }
+
+    setPage(pageNum);
     setIsSearching(false);
     setCategoryTitle('Trending Movies');
   };
 
 
-  const fetchSeries = async () => {
-    const response = await fetch(`/api/movies?type=tv&endpoint=top_rated`);
+
+  const fetchSeries = async (pageNum = 1) => {
+    const response = await fetch(`/api/movies?type=tv&endpoint=popular&page=${pageNum}`);
     const data = await response.json();
-    setMovies(data.results || []);
+
+    if (pageNum === 1) {
+      setMovies(data.results || []);
+    } else {
+      setMovies(prev => [...prev, ...(data.results || [])]);
+    }
+
+    setPage(pageNum);
     setIsSearching(false);
-    setCategoryTitle('Top Rated TV Series');
+    setCategoryTitle('Trending Series');
   };
+
 
   const fetchTopRated = async () => {
     const response = await fetch(`/api/movies?type=movie&endpoint=top_rated`);
@@ -338,6 +362,28 @@ export default function Home() {
                       />
                     ))}
                   </div>
+
+                  {categoryTitle !== 'Saved' && movies.length > 0 && (
+                    <div className="flex justify-center mt-12 pb-10">
+                      <button
+                        onClick={() => {
+                          if (searchQuery && isSearching === false) {
+                            searchMovies(page + 1);
+                          } else if (categoryTitle === 'Trending Movies') {
+                            fetchTrending(page + 1);
+                          } else if (categoryTitle === 'Trending Series') {
+                            fetchSeries(page + 1);
+                          }
+                        }}
+                        className={`px-12 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 shadow-xl ${isDark
+                          ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-purple-500/20'
+                          : 'bg-zinc-900 hover:bg-black text-white shadow-black/20'
+                          }`}
+                      >
+                        {isSearching ? 'Loading...' : 'Load More'}
+                      </button>
+                    </div>
+                  )}
                   {categoryTitle === 'Saved' && watchlist.length === 0 && (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
                       <span className="text-6xl mb-4">🎬</span>
@@ -354,6 +400,6 @@ export default function Home() {
             )
         }
       </div >
-    </GoogleOAuthProvider>
+    </GoogleOAuthProvider >
   );
 }
