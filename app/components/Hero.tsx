@@ -28,7 +28,7 @@ export default function Hero(props: HeroProps) {
             <div className="w-120 h-120 bg-purple-600/60 rounded-full bottom-60 pointer-events-none absolute blur-[100px]"></div>
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">{heroText}<span className="animate-pulse">|</span>
             </h1>
-            <p className="text-xl text-center text-zinc-400 mb-10">{'Find your favorite movie and watch it online for free!'.split('').map((char, i) => (
+            <p className={`text-xl text-center mb-10 ${isDark ? 'text-zinc-400' : 'text-zinc-700'}`}>{'Find your favorite movie and watch it online for free!'.split('').map((char, i) => (
                 <span key={i} className="animate-card inline-block" style={{ animationDelay: `${i * 0.03}s` }}>
                     {char === ' ' ? '\u00A0' : char}
                 </span>

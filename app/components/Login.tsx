@@ -13,7 +13,7 @@ interface LoginFormProps {
     setRemember: (val: boolean) => void;
     handleLogin: () => void;
     navigateTo: (page: string) => void;
-    handleGoogleLogin: () => void;
+    handleGoogleLogin: (response: any) => void;
     setErrorMsg: (msg: string) => void;
 }
 
@@ -65,17 +65,16 @@ export default function LoginForm(props: LoginFormProps) {
                 </div>
                 <div className="flex justify-center mt-6">
                     <GoogleLogin
-                        onSuccess={credentialResponse => {
-                            console.log(credentialResponse);
-                            handleGoogleLogin();
-                        }}
+                        onSuccess={(response) => handleGoogleLogin(response)}
                         onError={() => {
                             console.log('Login Failed');
                         }}
                         useOneTap
                         theme={isDark ? "filled_black" : "outline"}
-                        shape="circle"
+                        shape="pill"
+                        width="320"
                     />
+
                 </div>
 
                 <p className="text-center mt-6 text-gray-500">Don't have an account?{' '}

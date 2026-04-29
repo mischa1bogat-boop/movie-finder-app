@@ -9,6 +9,7 @@ import Mdetails from './components/Mdetails';
 import LoginForm from './components/Login';
 import Register from './components/Register';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 
 
@@ -110,6 +111,10 @@ export default function Home() {
   }, []);
 
   const searchMovies = async () => {
+    if (!isLogin) {
+      navigateTo('register');
+      return;
+    }
     if (!searchQuery) return;
     setIsSearching(true);
     const response = await fetch(`/api/movies?type=${searchType}&query=${searchQuery}`);
@@ -161,9 +166,21 @@ export default function Home() {
     }
     fetchGenres();
     fetchTrending();
-    const savedWatchlist = localStorage.getItem('watchlist');
+    const currentUser = localStorage.getItem('user');
+    const savedWatchlist = currentUser ? localStorage.getItem(`watchlist_${currentUser}`) : null;
     if (savedWatchlist) setWatchList(JSON.parse(savedWatchlist));
+    else setWatchList([]);
   }, [])
+  useEffect(() => {
+    if (isLogin && user) {
+      const savedWatchlist = localStorage.getItem(`watchlist_${user}`);
+      setWatchList(savedWatchlist ? JSON.parse(savedWatchlist) : []);
+    } else if (!isLogin) {
+      setWatchList([]);
+    }
+  }, [isLogin, user]);
+
+
   useEffect(() => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }, [isDark])
@@ -188,6 +205,7 @@ export default function Home() {
     setIsLogin(true);
     setPassword('');
     navigateTo('home');
+    setUser(user);
   }
 
   const handleRegister = () => {
@@ -208,12 +226,17 @@ export default function Home() {
     setIsLogin(true);
     setPassword('');
     navigateTo('home');
+    setUser(user);
   }
 
-  const handleGoogleLogin = () => {
-    const fakeGoogleUser = "Google_User_" + Math.floor(Math.random() * 1000);
-    localStorage.setItem('user', fakeGoogleUser);
-    setUser(fakeGoogleUser);
+  const handleGoogleLogin = (credentialResponse: any) => {
+    const token = credentialResponse.credential;
+    const decoded: any = jwtDecode(token);
+
+    const googleName = decoded.name;
+
+    localStorage.setItem('user', googleName);
+    setUser(googleName);
     setIsLogin(true);
     navigateTo('home');
   };
@@ -266,7 +289,6 @@ export default function Home() {
                 isLogin={isLogin}
                 navigateTo={navigateTo}
               />
-
             </>
           ) :
             currentPage === 'register' ? (
@@ -282,6 +304,7 @@ export default function Home() {
                 setRemember={setRemember}
                 handleRegister={handleRegister}
                 navigateTo={navigateTo}
+                handleGoogleLogin={handleGoogleLogin}
               />
             ) : (
               <>

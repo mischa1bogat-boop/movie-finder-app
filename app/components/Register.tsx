@@ -1,4 +1,6 @@
 import React from 'react';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 interface RegisterProps {
     isDark: boolean;
@@ -12,9 +14,10 @@ interface RegisterProps {
     setErrorMsg: (errorMsg: string) => void;
     handleRegister: () => void;
     navigateTo: (page: string) => void;
+    handleGoogleLogin: (response: any) => void;
 }
 
-export default function Register({ isDark, user, password, remember, errorMsg, setUser, setPassword, setRemember, setErrorMsg, handleRegister, navigateTo }: RegisterProps) {
+export default function Register({ isDark, user, password, remember, errorMsg, setUser, setPassword, setRemember, setErrorMsg, handleRegister, navigateTo, handleGoogleLogin }: RegisterProps) {
     return (
 
 
@@ -78,9 +81,19 @@ export default function Register({ isDark, user, password, remember, errorMsg, s
                         <span className="text-zinc-500">or</span>
                         <hr className="flex-grow border-zinc-300" />
                     </div>
-                    <div className="flex justify-center gap-6 mt-4">
-                        <button className="border rounded-full w-10 h-10 flex items-center justify-center">G</button>
-                        <button className="border rounded-full w-10 h-10 flex items-center justify-center">F</button>
+                    <div className="mt-6 flex flex-col items-center gap-4">
+                        <GoogleLogin
+                            onSuccess={(response) => handleGoogleLogin(response)}
+                            onError={() => {
+                                console.log('Login Failed');
+                                setErrorMsg("Google Authentication failed");
+                            }}
+                            useOneTap
+                            theme={isDark ? "filled_black" : "outline"}
+                            shape="pill"
+                            width="320"
+                        />
+
                     </div>
                     <div className="flex justify-center gap-2 mt-4 gap-4">
                         <p className={`text-center mt-6 text-gray-500`}>Already have an account?</p>

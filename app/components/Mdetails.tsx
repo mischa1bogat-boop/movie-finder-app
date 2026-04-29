@@ -35,8 +35,14 @@ export default function Mdetails({
         } else {
             newWatchlist = [...watchlist, selectedMovie];
         }
+
         setWatchList(newWatchlist);
-        localStorage.setItem('watchlist', JSON.stringify(newWatchlist));
+
+        const currentUser = localStorage.getItem('user');
+        if (currentUser) {
+            localStorage.setItem(`watchlist_${currentUser}`, JSON.stringify(newWatchlist));
+        }
+
     };
 
     return (
