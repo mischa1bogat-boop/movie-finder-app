@@ -1,17 +1,26 @@
 
 # Movie Finder 🎬
 
-A full-stack web application for searching and exploring movies. Built as a portfolio project to demonstrate professional development skills.
+A full-stack web application for searching and exploring movies. Built as a portfolio project to demonstrate professional development skills including API integration, authentication, and modern UI/UX practices.
 
-## 🚀 Tech Stack
-- **Frontend:** Next.js (App Router), React.js, Tailwind CSS
-- **Backend:** Next.js API Routes (Server-side API integration)
-- **API:** The Movie Database (TMDB) API
+🔗 **[Live Demo](https://movie-finder-app.vercel.app)**
 
-## 🛠 Key Features
-- **Security-First:** API keys are hidden on the server side using environment variables and API Routes.
-- **Responsive UI:** Modern design with Tailwind CSS and dark mode support.
-- **Functionality:** Search movies/series, explore trends, and save favorite items to a personalized Watchlist.
+## 🚀 Features
+
+* **Real-time Search:** Instantly find movies and series using the TMDB database.
+* **Google Authentication:** Secure user login via Google OAuth 2.0.
+* **Trending & Top Rated:** Stay updated with curated movie lists on the homepage.
+* **Responsive Design:** Fully optimized for desktop, tablet, and mobile devices.
+* **Dark/Light Mode:** Comfortable viewing experience in any lighting.
+
+## 🛠 Tech Stack
+
+* **Frontend:** Next.js 14+ (App Router), React.js, Tailwind CSS.
+* **Language:** TypeScript (for type safety and clean code).
+* **Backend:** Next.js API Routes (Server-side API integration).
+* **Authentication:** Google Identity Services.
+* **API:** The Movie Database (TMDB) API.
+* **Deployment:** Vercel (Continuous Deployment).
 
 ## 📦 How to Run Locally
 
