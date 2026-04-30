@@ -5,19 +5,16 @@ export async function GET(request: Request) {
     const type = searchParams.get('type') || 'movie';
     const query = searchParams.get('query');
     const endpoint = searchParams.get('endpoint') || 'popular';
-    const page = searchParams.get('page') || '1'; // Додаємо отримання сторінки
+    const page = searchParams.get('page') || '1';
+    const language = searchParams.get('language') || 'en-US';
 
     const API_KEY = process.env.TMDB_API_KEY;
     let url = '';
 
-    if (type === 'genre') {
-        url = `https://api.themoviedb.org/3/genre/${endpoint}?api_key=${API_KEY}`;
-    }
-    else if (query) {
-        url = `https://api.themoviedb.org/3/search/${type}?api_key=${API_KEY}&query=${query}&page=${page}`;
-    }
-    else {
-        url = `https://api.themoviedb.org/3/${type}/${endpoint}?api_key=${API_KEY}&page=${page}`;
+    if (query) {
+        url = `https://api.themoviedb.org/3/search/${type}?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}&language=${language}&include_adult=false`;
+    } else {
+        url = `https://api.themoviedb.org/3/${type}/${endpoint}?api_key=${API_KEY}&page=${page}&language=${language}`;
     }
 
     try {

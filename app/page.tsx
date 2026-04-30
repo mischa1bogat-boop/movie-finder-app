@@ -10,6 +10,7 @@ import LoginForm from './components/Login';
 import Register from './components/Register';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+import Fuse from 'fuse.js';
 
 
 
@@ -117,18 +118,34 @@ export default function Home() {
       navigateTo('register');
       return;
     }
-    if (!searchQuery) return;
+
+    const cleanQuery = searchQuery.trim().toLowerCase();
+    if (!cleanQuery) return;
     setIsSearching(true);
-    const response = await fetch(`/api/movies?type=${searchType}&query=${searchQuery}&page=${pageNum}`);
+    const response = await fetch(`/api/movies?type=${searchType}&query=${cleanQuery}&page=${pageNum}`);
     const data = await response.json();
+    let results = data.results || [];
+    if (results.length > 0) {
+      const fuse = new Fuse(results, {
+        keys: ['title', 'name', 'original_title'],
+        threshold: 0.4,
+      });
+
+      const fuzzyResults = fuse.search(cleanQuery).map(r => r.item);
+      if (fuzzyResults.length > 0) {
+        results = fuzzyResults;
+      }
+    }
     if (pageNum === 1) {
-      setMovies(data.results || []);
+      setMovies(results);
+      setCategoryTitle(`Search Results for "${searchQuery}"`);
     } else {
-      setMovies(prev => [...prev, ...(data.results || [])]);
+      setMovies(prev => [...prev, ...results]);
     }
     setPage(pageNum);
     setIsSearching(false);
   };
+
 
 
   const fetchTrending = async (pageNum = 1) => {
@@ -339,7 +356,7 @@ export default function Home() {
                     searchType={searchType}
                     setSearchType={setSearchType}
                     fetchTrending={fetchTrending}
-                    fetchTrendingSeries={fetchTrendingSeries}
+                    fetchTrendingSeries={fetchSeries}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                     searchMovies={searchMovies}

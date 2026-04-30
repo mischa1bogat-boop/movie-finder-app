@@ -46,7 +46,7 @@ export default function Hero(props: HeroProps) {
                     onKeyDown={(e) => { if (e.key === 'Enter') searchMovies(); }}
                     className="flex-grow bg-zinc-900 border border-zinc-700 rounded-l-2xl px-6 py-4 text-xl text-white focus:outline-none focus:border-purple-500 transition-colors"
                 />
-                <button onClick={searchMovies} className="bg-purple-600 hover:bg-purple-500 px-8 py-4 rounded-r-2xl text-xl font-bold text-white transition-colors">Search</button>
+                <button onClick={() => searchMovies()} className="bg-purple-600 hover:bg-purple-500 px-8 py-4 rounded-r-2xl text-xl font-bold text-white transition-colors">Search</button>
             </div>
         </div>
     );
